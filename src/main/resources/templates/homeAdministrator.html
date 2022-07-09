@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{parts/setting :: common_head}">
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+ <body>
+ <div th:replace="~{parts/setting :: page_header_admin}"></div>
+
+
+<div class="container">
+
+<div style="text-align:right;" class="mt-5" th:text="${session.loginUser.member.name} + さんこんにちは"></div>
+<div style="text-align:right;" class="mt-1 mb-3"><a th:href="@{/logout}">ログアウト</a></div>
+<div class="row">
+	
+	<div class="mt-5">	
+	<div class="d-flex justify-content-around mt-5">
+	
+	<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title"><a th:href="@{/user}" >スタッフ一覧</a></h5>
+    <p class="card-text">スタッフの新規追加、変更、削除等が行えます。</p>
+  </div>
+</div>
+
+<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><a th:href="@{/store}">店舗一覧</a></h5>
+    <p class="card-text">店舗の新規追加、変更、削除等が行えます。</p>
+  </div>
+</div>
+
+<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title"><a th:href="@{/course}">研修一覧</a></h5>
+    <p class="card-text">研修の追加、編集、削除などが行えます。</p>
+  </div>
+</div>
+</div>
+	</div>
+	
+	</div>
+
+	
+	<h2 class="mt-4">Information</h2>
+	<table class="table mt-4">
+	<tr>
+	<th>更新日時</th>
+	<th>コースタイトル</th>
+	<th>内容</th>
+	</tr>
+	
+	<tr th:each="c:${courseUpdateSelectAll}">
+	<td th:text="${#dates.format(c.updateDate,'yyyy/MM/dd')}"></td>
+	<td th:text="${c.courseTitle}"></td>
+	<td>
+	<th:block th:switch="${c.typeId}">
+	<div th:case=1 th:text="${c.courseTitle} + 研修が追加されました"></div>
+	<div th:case=2 th:text="${c.courseTitle} +研修の内容が更新されました"></div>
+	</th:block>
+	
+	</td>
+	</tr>
+	
+	</table>
+
+	
+	</div>
+	<script th:replace="~{parts/setting ::common_js}"></script>
+</body>
+</html>

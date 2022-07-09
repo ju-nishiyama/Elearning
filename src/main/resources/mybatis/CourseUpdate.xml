@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.CourseUpdateDao">
+
+<insert id="updateDate" parameterType="com.zdrv.domain.CourseUpdate">
+INSERT INTO course_update VALUES(#{courseId},#{typeId},#{courseTitle},#{updateDate});
+</insert>
+
+<select  id="selectAll" resultType="com.zdrv.domain.CourseUpdate">
+SELECT * FROM course_update;
+</select>
+
+</mapper>

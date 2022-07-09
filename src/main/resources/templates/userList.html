@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{parts/setting :: common_head}">
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<div th:replace="~{parts/setting :: page_header_admin}"></div>
+	
+	<div class="containar mt-3" >
+	<div class="d-flex justify-content-center mb-1">
+	<div class="row">
+	<div class="col">
+	<h1>ユーザー一覧</h1>
+	<p><a th:href="@{/user/add}" class="btn btn-primary mt-3">ユーザーを追加する</a></p>
+	
+	<div class="card">
+	<div class="card-header">ユーザーを検索する</div>
+	<div class="card-body">
+
+	<form action="" method="post">
+
+
+	
+	<table class="table table-bordered" th:object="${member}">
+
+	<tr>
+	<th>名前</th>
+	<td>
+	<input type="text" name="name" class="form-control" th:field="*{name}"/>
+	</td>
+	</tr>
+	
+	<tr>
+	<th>役職</th>
+	<td >
+	<input type="radio" name="役職" value="スタッフ" class="form-check-input" th:field="*{positionName}"/>スタッフ
+	<input type="radio" name="役職" value="店長" class="form-check-input" th:field="*{positionName}"/>店長
+	<input type="radio" name="役職" value="エリアマネージャー"class="form-check-input" th:field="*{positionName}"/>エリアマネージャー
+	<input type="radio" name="役職" value="本部管理者"class="form-check-input" th:field="*{positionName}"/>本部管理者
+	</td>
+	</tr>
+	
+	<tr>
+	<th>所属店舗</th>
+	<td >
+	<input type="text"  name="workStore" class="form-control" th:field="*{workStore}">
+	</td>
+	</tr>
+	
+	</table>
+	
+	<input type="submit" value="検索" />
+	</form>
+	</div>
+	</div>
+	
+	
+	<table class="table mt-4">
+	<tr>
+	<th>ID</th>
+	<th>名前</th>
+	<th>フリガナ</th>
+	<th>年齢</th>
+	<th>生年月日</th>
+	<th>役職</th>
+	<th>所属店舗</th>
+	<th>入社日</th>
+	<th>ログインID</th>
+	</tr>
+	
+	<tr th:each="u:${user}">
+	<td th:text="${u.id}"></td>
+	<td><a th:href="@{/user/edit/{id}(id=${u.id})}" th:text="${u.member.name}"></a></td>
+	<td th:text="${u.member.kana}"></td>
+	<td th:text="${u.member.age}"></td>
+	<td th:text="${#dates.format(u.member.birthday,'yyyy/MM/dd')}"></td>
+	<td th:text="${u.member.positionName}"></td>
+	<td th:text="${u.member.workStore}"></td>
+	<td th:text="${#dates.format(u.member.hireDate,'yyyy/MM/dd')}"></td>
+	<td th:text="${u.loginId}"></td>
+	</tr>
+	
+	</table>
+	
+	<p><a th:href="@{/home/administrator}">トップページへ戻る</a></p>
+
+	</div>
+	</div>
+	</div>
+	</div>
+	<script th:replace="~{parts/setting :: common_js}"></script>
+</body>
+</html>

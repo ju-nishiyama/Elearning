@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{parts/setting :: common_head}">
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	
+	<div th:replace="~{parts/setting :: page_header_admin}"></div>
+
+	<p>登録完了しました</p>
+	<a th:href="@{/home/administrator}">トップページに戻る</a>  /  <a th:href="@{/user}">一覧に戻る</a>
+</body>
+</html>

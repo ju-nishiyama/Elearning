@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.MemberDao">
+
+
+<insert id="add" parameterType="com.zdrv.domain.Member" useGeneratedKeys="true" keyProperty="memberId">
+insert into members values(#{memberId},#{name},#{kana},#{age},#{birthday},#{positionName},#{workStore},#{hireDate});
+</insert>
+
+<select id="selectAllMembers" resultType="com.zdrv.domain.Member">
+select * from members;
+</select>
+
+<select id="selectById" resultType="com.zdrv.domain.Member">
+select * from members where members_id = #{memberId};
+</select>
+
+<update id="memberEdit" parameterType="com.zdrv.domain.Member">
+update members set name=#{name},kana=#{kana},age=#{age},birthday=#{birthday},position_name=#{positionName}, 
+work_store=#{workStore},hire_date = #{hireDate} where members_id = #{memberId};
+</update>
+
+<delete id="memberDeleteById" parameterType="int">
+delete from members where members_id = #{memberId};
+</delete>
+
+
+<resultMap id="joinedMap" type="com.zdrv.domain.Member">
+<id column="members_id" property="memberId"/>
+</resultMap>
+
+<select id="selectByName" resultMap="joinedMap">
+SELECT * FROM members WHERE name=#{name};
+</select>
+
+<select  id="selectByPosition" resultMap="joinedMap">
+SELECT * FROM members WHERE position_name = #{positionName};
+</select>
+
+<select  id="selectByStore" resultMap="joinedMap">
+SELECT * FROM members WHERE work_store = #{workStore};
+</select>
+
+<select  id="selectByName_Position_Store" resultMap="joinedMap">
+SELECT * FROM members WHERE name=#{name} and position_name=#{positionName} and
+work_store =#{workStore} ;
+</select>
+
+<select  id="selectByName_Position" resultMap="joinedMap">
+SELECT * FROM members WHERE name=#{name} and position_name=#{positionName} ;
+</select>
+
+<select  id="selectByName_Store" resultMap="joinedMap">
+SELECT * FROM members WHERE name=#{name} and work_store =#{workStore};
+</select>
+
+
+<select  id="selectByPosition_Store" resultMap="joinedMap">
+SELECT * FROM members WHERE position_name=#{positionName} ando work_store =#{workStore};
+
+</select>
+
+
+</mapper>
+

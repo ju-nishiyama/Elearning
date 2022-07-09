@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{parts/setting :: common_head}"></head>
+<body>
+
+<div th:replace="~{parts/setting :: page_header_admin}"></div>
+ <div class="container mt-5">
+<div class="card">
+<div class="card-header">ログインフォーム</div>
+<div class="card-body">
+<form action="" method="post" th:object="${user}">
+	
+	<p th:errors="*{loginId}" style="color:red;"></p>
+	<input type="text" th:field="*{loginId}" class="form-control mt-3" placeholder="ログインID"/>
+	
+	<p th:errors="*{loginPass}" style="color:red;"></p>
+	<input type="password" th:field="*{loginPass}"  class="form-control mt-3" placeholder="ログインPASS"/>
+	
+	
+	<input type="submit" class="btn btn-primary mt-4" value="ログイン"/>
+	
+
+</form>
+</div>
+</div>
+
+</div><!-- panel -->
+
+
+
+
+<script th:replace="~{parts/setting :: common_js}"></script>
+</body>
+</html>

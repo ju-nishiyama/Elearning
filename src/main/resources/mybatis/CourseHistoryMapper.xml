@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.CourseHistoryDao">
+
+
+<insert id="add" parameterType="com.zdrv.domain.CourseHistory" useGeneratedKeys="true" keyProperty="historyId">
+insert into course_history (members_id,members_name,course_id,browsing_date) values (#{memberId},#{memberName},#{courseId},#{browsingDate});
+</insert>
+
+<resultMap id="joinedMap" type="com.zdrv.domain.CourseHistory">
+<id column="course_id" property="courseId"/>
+<result column="members_id" property="memberId"/>
+<result column="members_name" property="memberName"/>
+<result column="browsing_date" property="browsingDate"/>
+<association property="course" javaType="com.zdrv.domain.Course">
+<id column="c_id" property="courseId"/>
+<result column="title" property="title"/>
+<result column="contents" property="contents"/>
+<result column="contents_type" property="contentsType"/>
+<result column="required_subject" property="requiredSubject"/>
+<result column="target_level" property="targetLevel"/>
+</association>
+
+</resultMap>
+
+
+
+<select id="historyAll" resultMap="joinedMap">
+SELECT ch.course_id,ch.members_id,ch.members_name,ch.browsing_date,c.course_id AS c_id,c.title,c.contents,c.contents_type,c.required_subject,c.target_level
+ FROM course_history AS ch RIGHT JOIN course AS c ON ch.course_id = c.course_id ORDER BY ch.browsing_date DESC;
+</select>
+
+</mapper>

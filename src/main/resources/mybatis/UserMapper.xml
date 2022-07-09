@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.UserDao">
+
+<resultMap type="com.zdrv.domain.User" id="joinedMap">
+<id column="id" property="id"/>
+<result column="loginId" property="loginId"/>
+<result column="loginPass" property="loginPass"/>
+<association property="member" javaType="com.zdrv.domain.Member">
+<id column="members_id" property="memberId"/>
+<result column="name" property="name"/>
+<result column="kana" property="kana"/>
+<result column="age" property="age"/>
+<result column="birthday" property="birthday"/>
+<result column="position_name" property="positionName"/>
+<result column="work_store" property="workStore"/>
+<result column="hire_date" property="hireDate"/>
+</association>
+</resultMap>
+
+
+<select id="selectAllUsers" resultMap="joinedMap">
+select u.id,u.loginId,u.loginPass,m.members_id,m.name,m.kana, m.age,m.birthday,m.position_name,m.work_store,m.hire_date 
+ from users as u join members  as m on u.id = m.members_id;
+</select>
+
+
+
+<select id="selectByLoginId"  resultMap="joinedMap" parameterType="String" >
+select u.id,u.loginId,u.loginPass,m.members_id,m.name,m.kana, m.age,m.birthday,m.position_name,m.work_store,m.hire_date 
+ from users as u join members  as m on u.id = m.members_id where u.loginId=#{loginId} ; 
+</select>
+
+
+<insert id="add" parameterType="com.zdrv.domain.User" useGeneratedKeys="true" keyProperty="id">
+insert into users values(#{id},#{loginId},#{loginPass});
+</insert>
+
+<update id="userEdit" parameterType="com.zdrv.domain.User" >
+update users set loginId=#{loginId},loginPass=#{loginPass} where id = #{id};
+</update>
+
+<select id="selectById" resultMap="joinedMap">
+select u.id,u.loginId,u.loginPass,m.members_id,m.name,m.kana, m.age,m.birthday,m.position_name,m.work_store,m.hire_date  from users as u join members as m on u.id = m.members_id where u.id = #{id};
+</select>
+
+
+<delete id="userDeleteById" parameterType="int">
+delete from users where id = #{id};
+</delete>
+
+</mapper>
+

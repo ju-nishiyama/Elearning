@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.CourseDao">
+ 
+
+<resultMap id="joinedMap2" type="com.zdrv.domain.Course">
+<id column="course_id" property="courseId"/>
+<result column="title" property="title"/>
+<result column="contents" property="contents"/>
+<result column="contents_type" property="contentsType"/>
+<result column="required_subject" property="requiredSubject"/>
+<result column="target_level" property="targetLevel"/>
+<result column="course_url" property="courseUrl"/>
+<collection property="courseHistory" ofType="com.zdrv.domain.CourseHistory">
+<id column="members_id" property="memberId"/>
+<result column="browsing_date" property="browsingDate"/>
+</collection>	
+</resultMap>	
+
+<select id="selectAllCourse" resultMap="joinedMap2">
+SELECT c.course_id,c.title,c.contents,c.contents_type,c.required_subject,c.target_level,c.course_url,
+ch.browsing_date  FROM course AS c JOIN course_history AS ch ON c.course_id=ch.course_id WHERE
+ch.members_id =#{membersId} ORDER BY ch.browsing_date DESC;
+</select>
+
+<select id="allCourse" resultType="com.zdrv.domain.Course">
+SELECT * FROM course;
+</select>
+
+
+<select id="selectRequiredCourse" resultType="com.zdrv.domain.Course">
+select * from course where required_subject like "必須" and  target_level like #{positionName};
+</select>
+
+
+
+<insert id="add" parameterType="com.zdrv.domain.Course" useGeneratedKeys="true" keyProperty="courseId">
+insert into course (title,contents,contents_type,required_subject,target_level,author,create_date,course_url) values 
+(#{title},#{contents},#{contentsType},#{requiredSubject},#{targetLevel},#{author},#{createDate},#{courseUrl});
+</insert>
+
+<select id="selectById" parameterType="int" resultType="com.zdrv.domain.Course">
+select * from course where course_id = #{courseId};
+</select>
+
+<delete id="deleteById" parameterType="int">
+delete from course where course_id =#{courseId};
+</delete>
+
+<update id="courseEdit" parameterType="com.zdrv.domain.Course">
+update course set title=#{title},contents=#{contents},contents_type=#{contentsType}, 
+required_subject=#{requiredSubject},target_level =#{targetLevel} where course_id = #{courseId};
+</update>
+
+<resultMap id="joinedMap" type="com.zdrv.domain.Course">
+<id column="course_id" property="courseId"/>
+<result column="title" property="title"/>
+<collection property="courseHistory" ofType="com.zdrv.domain.CourseHistory">
+<result column="members_name" property="memberName"/>
+<result column="browsing_date" property="browsingDate"/>
+</collection>
+</resultMap>
+
+<select  id="courseHistory" resultMap="joinedMap">
+SELECT c.course_id,c.title,ch.members_name,ch.browsing_date FROM course AS c JOIN course_history AS ch ON 
+c.course_id=ch.course_id;
+</select>
+
+
+
+
+
+</mapper>
+

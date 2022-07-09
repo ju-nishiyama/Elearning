@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.StoreDao">
+
+<insert id="addStore" parameterType="com.zdrv.domain.Store" useGeneratedKeys="true" keyProperty="storeId">
+insert into stores (store_name,store_type,address,telephone_number,opening_hours,closing_hours,regular_holiday) values 
+(#{storeName},#{storeType},#{address},#{telephoneNumber},#{openingHours},#{closingHours},#{regularHoliday});
+</insert>
+
+
+<select id="selectAll" resultType="com.zdrv.domain.Store" >
+select * from stores;
+</select>
+
+<select id="selectById" parameterType="int" resultType="com.zdrv.domain.Store">
+select * from stores where store_id = #{storeId};
+</select>
+
+<update id="update" parameterType="com.zdrv.domain.Store">
+update stores set store_name=#{storeName},store_type=#{storeType},address=#{address},
+telephone_number=#{telephoneNumber},opening_hours=#{openingHours},closing_hours=#{closingHours},
+regular_holiday=#{regularHoliday} where store_id = #{storeId};
+</update>
+
+<delete id="delete" parameterType="Integer">
+delete from stores where store_id=#{storeId};
+</delete>
+
+</mapper>
+

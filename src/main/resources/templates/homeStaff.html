@@ -1,0 +1,58 @@
+	<!doctype html>
+	<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{parts/setting :: common_head}">
+		<meta charset="UTF-8" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="container">
+		<div class="row">
+		<div class="col">
+		<h1>ホーム</h1>
+		<div th:text="|${session.loginUser.member.name}  さんようこそ |" class="row justify-content-end fz-150"></div><a th:href="@{/login}" class="logout">ログアウト</a>
+		
+		
+		<h2>研修必須項目</h2>
+		<table class="table table-borderd">
+	<tr>
+	<th>タイトル</th>
+	<th>研修内容</th>
+	<th>研修タイプ</th>
+	<th></th>
+	</tr>
+	
+	<tr th:each="c:${course}">
+	<td th:text="${c.title}"></td>
+	<td th:text="${c.contents}"></td>
+	<td th:text="${c.contentsType}"></td>
+	<td ><a th:href="@{/course/{id}(id=${c.courseId})}">詳細</a></td>
+	
+	</tr>
+	</table>
+		
+		<h2>受講履歴</h2>
+		<table class="table table-bordered">
+		
+		<tr>
+		<th>タイトル</th>
+		<th>研修内容</th>
+		<th>研修タイプ</th>
+		</tr>
+		
+		<tr th:each="com:${completedCourse}">
+		<td th:text="${com.course.title}"></td>
+		<td th:text="${com.course.contents}"></td>
+		<td th:text="${com.course.contentsType}"></td>
+		</tr>
+		
+		</table>
+		
+		<h2>おすすめの研修</h2>
+		
+		</div>
+		</div>
+		</div>
+		
+		<script th:replace="~{parts/setting :: common_js}"></script>
+	</body>
+	</html>
