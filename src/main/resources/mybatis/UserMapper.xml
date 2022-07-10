@@ -33,7 +33,7 @@ select u.id,u.loginId,u.loginPass,m.members_id,m.name,m.kana, m.age,m.birthday,m
 
 
 <insert id="add" parameterType="com.zdrv.domain.User" useGeneratedKeys="true" keyProperty="id">
-insert into users values(#{id},#{loginId},#{loginPass});
+insert into users(loginId,loginPass) values(#{loginId},#{loginPass});
 </insert>
 
 <update id="userEdit" parameterType="com.zdrv.domain.User" >

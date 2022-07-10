@@ -4,7 +4,7 @@
 
 
 <insert id="add" parameterType="com.zdrv.domain.Member" useGeneratedKeys="true" keyProperty="memberId">
-insert into members values(#{memberId},#{name},#{kana},#{age},#{birthday},#{positionName},#{workStore},#{hireDate});
+insert into members(name,kana,age,birthday,position_name,work_store,hire_date) values(#{name},#{kana},#{age},#{birthday},#{positionName},#{workStore},#{hireDate});
 </insert>
 
 <select id="selectAllMembers" resultType="com.zdrv.domain.Member">
